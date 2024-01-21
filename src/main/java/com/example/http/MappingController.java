@@ -17,11 +17,12 @@ public class MappingController {
     value = "/example/{pathVar}",
     // method: 어떤 HTTP 메서드에 대해 실행이 되는지
     method = { RequestMethod.GET, RequestMethod.POST },
+    // consumes: 어떤 데이터 형식에 대해 실행이 되는지
     // 요청의 Content-Type 헤더
     consumes = MediaType.APPLICATION_JSON_VALUE,
     // headers: 어떤 헤더가 포함되어야 실행이 되는지
     headers = "x-likelion=hello",
-    // params: 어떤 Query Parameter가 있어야 하는지
+    // params: 어떤 Query Parameter가 있어야 하는지("이 파라미터가 있어야 해당 메서드를 실행하겠다"란 의미)
     params = "likelion=hello"
   )
   @ResponseBody

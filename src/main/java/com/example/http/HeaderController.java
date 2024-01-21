@@ -7,22 +7,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import java.util.List;
 import java.util.Map;
 
+// header를 받을 수 있는 방법이 1가지 방법만 있는 것은 아니다.
 @Slf4j
 @Controller
 public class HeaderController {
+  // 특정 헤더 하나를 가져오고 싶을 때
   @PostMapping("/single-header")
   @ResponseBody
   public String singleHeader(
-    // HTTP 요청에 포함된 Header 하나 가져오고 싶을 때
-    // : 해당 헤더가 요청에 포함되어 있지 않으면 실행할 수 없다란 응답이 돌아온다.
+    // @RequestHeader
+    // : HTTP 요청에 포함된 Header 하나 가져오고 싶을 때 @RequestHeader 어노테이션을 활용할 수 있다.
+    // 해당 헤더가 요청에 포함되어 있지 않으면 실행할 수 없다란 응답이 돌아온다.
     // (보안에 활용할 수 있다.)
     @RequestHeader("content-Type") String contentType
   ) {
-    return contentType;
+    return contentType; // Headers, Key: Content-Type  Value: application/json
   }
 
   @PostMapping("/option-header")
@@ -49,15 +51,11 @@ public class HeaderController {
   @PostMapping("/all-header")
   @ResponseBody
   public String allHeaders(
-    // HttpHeaders, Map<String, String>를 사용하면
-    // 전체 헤더를 다 확인할 수 있다.
-//            @RequestHeader
-//            Map<String, String> headers,
     @RequestHeader
+    // HttpHeaders, Map<String, String>를 사용하면 전체 헤더를 다 확인할 수 있다.
     HttpHeaders headers
   ) {
-    for (Map.Entry<String, List<String>> entry:
-      headers.entrySet()) {
+    for (Map.Entry<String, List<String>> entry: headers.entrySet()) {
       log.info(String.format(
         "%s: %s", entry.getKey(), entry.getValue()
       ));
